@@ -15,15 +15,12 @@ def main():
     s = 1 # 始点
     step = 0
     while True:
-        # print('s',str(s))
         for v in vum[s]:
-            # print('v',str(v))
             if F[v-1] < 0:
                 q.put(v)
                 F[v-1] = s
         if q.empty():
             break
-        # print(list(q.queue),V)
         s = q.get()
 
     if -1 in F[1:]:
