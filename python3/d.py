@@ -1,26 +1,5 @@
 from collections import defaultdict
-import itertools
-import math
-
-def dfs(vum,s,visit,depth):
-    # print('first')
-    # print(s,depth,visit)
-    if visit[s-1] >= 0:
-        return visit
-    visit[s-1] = depth
-    depth += 1
-    # print(vum[s])
-    for u in vum[s]:
-        # print('now', str(s), str(u), str(depth))
-        if visit[u-1] >= 0:
-            # print('skip', str(u))
-            if visit[u-1] > depth:
-                visit[u-1] = depth
-                # print('update', str(u))
-            continue
-        visit = dfs(vum,u,visit,depth)
-    return visit
-
+import queue
 
 def main():
     N,M = [int(x) for x in input().split()]
@@ -30,17 +9,26 @@ def main():
         vum[a].append(b)
         vum[b].append(a)
         
-    s = 1 # 現在地 (初期値はゴールを設定)
-    visit = [-1]*N # 訪問リスト
-    depth = 0 # 移動数(深さ)
-    visit = dfs(vum,s,visit,depth)
-    if -1 in visit:
+    ### bfs ###
+    q = queue.Queue()
+    F = [-1]*N # 道標の先の部屋
+    s = 1 # 始点
+    step = 0
+    while True:
+        for v in vum[s]:
+            if F[v-1] < 0:
+                q.put(v)
+                F[v-1] = s
+        if q.empty():
+            break
+        s = q.get()
+
+    if -1 in F[1:]:
         print('No')
-        return
     else:
         print('Yes')
-    for v in visit[1:]:
-        print(v)
+        for d in F[1:]:
+            print(d)
 
 if __name__ == '__main__':
     main()
