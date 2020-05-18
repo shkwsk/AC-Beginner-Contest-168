@@ -11,29 +11,26 @@ def main():
         
     ### bfs ###
     q = queue.Queue()
-    D = [-1]*N # 最短距離
+    F = [-1]*N # 道標の先の部屋
     s = 1 # 始点
     step = 0
-    D[s-1] = step
     while True:
         # print('s',str(s))
-        step = D[s-1] + 1
         for v in vum[s]:
             # print('v',str(v))
-            if D[v-1] < 0:
-                # print('append v',str(v),str(step))
+            if F[v-1] < 0:
                 q.put(v)
-                D[v-1] = step
+                F[v-1] = s
         if q.empty():
             break
         # print(list(q.queue),V)
         s = q.get()
 
-    if -1 in D[1:]:
+    if -1 in F[1:]:
         print('No')
     else:
         print('Yes')
-        for d in D[1:]:
+        for d in F[1:]:
             print(d)
 
 if __name__ == '__main__':
