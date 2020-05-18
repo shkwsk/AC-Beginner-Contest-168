@@ -13,7 +13,6 @@ def main():
     q = queue.Queue()
     F = [-1]*N # 道標の先の部屋
     s = 1 # 始点
-    step = 0
     while True:
         for v in vum[s]:
             if F[v-1] < 0:
@@ -27,8 +26,8 @@ def main():
         print('No')
     else:
         print('Yes')
-        for d in F[1:]:
-            print(d)
+        for f in F[1:]:
+            print(f)
 
 if __name__ == '__main__':
     main()
